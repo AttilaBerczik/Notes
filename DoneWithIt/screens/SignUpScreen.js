@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TouchableOpacity, Button, TextInput, Text, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebase from "../fire";
 
 const SignupScreen = ({ navigation }) => {
@@ -12,7 +13,15 @@ const SignupScreen = ({ navigation }) => {
             .auth()
             .createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
-                var user = userCredential.user;
+                const storeData = async (value) => {
+                    try {
+                        await AsyncStorage.setItem("userId", value);
+                    } catch (e) {
+                        setError(e);
+                    }
+                };
+                //saving the user id in local storage
+                storeData(userCredential.user.uid);
                 navigation.navigate("Home");
             })
             .catch((error) => {
