@@ -8,7 +8,6 @@ import SignupScreen from "./screens/SignUpScreen";
 const Stack = createStackNavigator();
 
 function App() {
-    console.log("here2");
     return (
         <NavigationContainer>
             <Stack.Navigator>
