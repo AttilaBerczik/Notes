@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { TouchableOpacity, Button, TextInput, Text, View } from "react-native";
+import { TouchableOpacity, Button, TextInput, Text, View, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import firebase from "../fire";
+import firebase from "../../fire";
 
 const SigninScreen = ({ navigation }) => {
     const [email, setEmail] = useState("");
@@ -14,7 +14,9 @@ const SigninScreen = ({ navigation }) => {
             try {
                 const value = await AsyncStorage.getItem("userId");
                 if (value !== null) {
-                    navigation.navigate("Home");
+                    navigation.navigate("Home", {
+                        userId: value,
+                    });
                 }
             } catch (e) {
                 setError(e);
@@ -23,6 +25,7 @@ const SigninScreen = ({ navigation }) => {
         getData();
     };
     checkSignin();
+
     const signIn = () => {
         firebase
             .auth()
@@ -37,7 +40,9 @@ const SigninScreen = ({ navigation }) => {
                 };
                 //saving the user id in local storage
                 storeData(userCredential.user.uid);
-                navigation.navigate("Home");
+                navigation.navigate("Home", {
+                    userId: userCredential.user.uid,
+                });
             })
             .catch((error) => {
                 var errorCode = error.code;
@@ -48,9 +53,9 @@ const SigninScreen = ({ navigation }) => {
     return (
         <View>
             <Text>Email</Text>
-            <TextInput value={email} onChangeText={setEmail} keyboardType="email-address" />
+            <TextInput value={email} onChangeText={setEmail} keyboardType="email-address" style={styles.input} />
             <Text>Password</Text>
-            <TextInput value={password} onChangeText={setPassword} secureTextEntry />
+            <TextInput value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
             {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
             <Button title="Sign In" onPress={() => signIn()} />
             <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
@@ -59,5 +64,19 @@ const SigninScreen = ({ navigation }) => {
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    input: {
+        borderWidth: 1,
+        borderColor: "#575009",
+        alignSelf: "stretch",
+        margin: 25,
+        height: 50,
+        borderRadius: 6,
+        paddingHorizontal: 16,
+        fontSize: 20,
+        fontWeight: "300",
+    },
+});
 
 export default SigninScreen;

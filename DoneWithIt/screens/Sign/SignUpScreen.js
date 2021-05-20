@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { TouchableOpacity, Button, TextInput, Text, View } from "react-native";
+import { TouchableOpacity, Button, TextInput, Text, View, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import firebase from "../fire";
+import firebase from "../../fire";
 
 const SignupScreen = ({ navigation }) => {
     const [email, setEmail] = useState("");
@@ -22,7 +22,9 @@ const SignupScreen = ({ navigation }) => {
                 };
                 //saving the user id in local storage
                 storeData(userCredential.user.uid);
-                navigation.navigate("Home");
+                navigation.navigate("Home", {
+                    userId: userCredential.user.uid,
+                });
             })
             .catch((error) => {
                 var errorCode = error.code;
@@ -33,9 +35,9 @@ const SignupScreen = ({ navigation }) => {
     return (
         <View>
             <Text>Email</Text>
-            <TextInput value={email} onChangeText={setEmail} keyboardType="email-address" />
+            <TextInput value={email} onChangeText={setEmail} keyboardType="email-address" style={styles.input} />
             <Text>Password</Text>
-            <TextInput value={password} onChangeText={setPassword} secureTextEntry />
+            <TextInput value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
             {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
             <Button title="Sign Up" onPress={() => signUp()} />
             <TouchableOpacity onPress={() => navigation.navigate("Signin")}>
@@ -44,5 +46,18 @@ const SignupScreen = ({ navigation }) => {
         </View>
     );
 };
+const styles = StyleSheet.create({
+    input: {
+        borderWidth: 1,
+        borderColor: "#575009",
+        alignSelf: "stretch",
+        margin: 25,
+        height: 50,
+        borderRadius: 6,
+        paddingHorizontal: 16,
+        fontSize: 20,
+        fontWeight: "300",
+    },
+});
 
 export default SignupScreen;
