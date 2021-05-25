@@ -16,7 +16,7 @@ function HomeScreen({ route, navigation }) {
 
     return (
         <View>
-            <Notes noteData={noteData} />
+            <Notes noteData={noteData} navigation={navigation} />
         </View>
     );
 }
