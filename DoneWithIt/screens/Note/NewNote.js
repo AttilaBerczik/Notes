@@ -1,25 +1,40 @@
-import React, { useState } from "react";
-import { Text, View, StyleSheet, TextInput } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, TextInput, BackHandler } from "react-native";
+import firebase from "../../fire";
+var db = firebase.firestore();
 
-function NewNote({ route, navigation }) {
-    const { index } = route.params;
+const NewNote = ({ route, navigation }) => {
+    const { index, userId, noteData } = route.params;
+    const docRef = db.doc("users/" + userId);
     const [title, setTitle] = useState(route.params.title);
     const [description, setDescription] = useState(route.params.description);
+    //when the user leaves the page save the changes
+    const save = () => {
+        let copy = [...noteData];
+        /*copy[index].t = title;
+        copy[index].d = description;*/
+        copy[index] = {
+            t: title,
+            d: description,
+        };
+        alert(JSON.stringify(copy));
+        /*  docRef
+            .set({ n: copy })
+            .then(() => {
+                console.log("Document successfully written!");
+            })
+            .catch((error) => {
+                console.log("Error writing document: ", error);
+            });*/
+    };
+    useEffect(() => navigation.addListener("blur", save), []);
     return (
         <View style={styles.div}>
-            <TextInput
-                value={title}
-                placeholder="Title"
-                style={{
-                    fontWeight: "bold",
-                }}
-                multiline={true}
-                onChangeText={setTitle}
-            />
+            <TextInput value={title} placeholder="Title" style={{ fontWeight: "bold" }} multiline={true} onChangeText={setTitle} />
             <TextInput value={description} placeholder="Description" multiline={true} onChangeText={setDescription} />
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     div: {

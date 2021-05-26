@@ -14,8 +14,8 @@ function App() {
             <Stack.Navigator>
                 <Stack.Screen name="Signin" component={SigninScreen} />
                 <Stack.Screen name="Signup" component={SignupScreen} />
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="NewNote" component={NewNote} />
+                <Stack.Screen options={{ title: "My home" }} name="Home" component={HomeScreen} />
+                <Stack.Screen name="NewNote" options={{ title: "Edit Note" }} component={NewNote} />
             </Stack.Navigator>
         </NavigationContainer>
     );

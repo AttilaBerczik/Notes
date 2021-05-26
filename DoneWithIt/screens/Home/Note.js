@@ -1,16 +1,17 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 
-function Note({ description, title, index, navigation }) {
+function Note({ index, navigation, userId, noteData }) {
+    const description = noteData[index].d;
+    const title = noteData[index].t;
     return (
-        <TouchableWithoutFeedback onPress={() => navigation.navigate("NewNote", { description: description, title: title, index: index })}>
+        <TouchableWithoutFeedback
+            onPress={() =>
+                navigation.navigate("NewNote", { noteData: noteData, index: index, userId: userId, title: title, description: description })
+            }
+        >
             <View style={styles.div}>
-                <Text
-                    style={{
-                        fontWeight: "bold",
-                    }}
-                    numberOfLines={1}
-                >
+                <Text style={{ fontWeight: "bold" }} numberOfLines={1}>
                     {title}
                 </Text>
                 <Text numberOfLines={2}>{description}</Text>

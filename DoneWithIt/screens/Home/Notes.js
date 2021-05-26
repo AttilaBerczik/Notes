@@ -1,11 +1,11 @@
 import React from "react";
 import Note from "./Note";
 
-function Notes({ noteData, navigation }) {
+function Notes({ noteData, navigation, userId }) {
     return (
         <>
             {noteData.map((c, index) => (
-                <Note description={c.d} key={index} index={index} title={c.t} navigation={navigation} />
+                <Note userId={userId} key={index} index={index} noteData={noteData} navigation={navigation} />
             ))}
         </>
     );
