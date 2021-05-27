@@ -11,23 +11,18 @@ const NewNote = ({ route, navigation }) => {
     //when the user leaves the page save the changes
     const save = () => {
         let copy = [...noteData];
-        /*copy[index].t = title;
-        copy[index].d = description;*/
-        copy[index] = {
-            t: title,
-            d: description,
-        };
-        alert(JSON.stringify(copy));
-        /*  docRef
+        copy[index] = { t: title, d: description };
+        docRef
             .set({ n: copy })
             .then(() => {
                 console.log("Document successfully written!");
             })
             .catch((error) => {
                 console.log("Error writing document: ", error);
-            });*/
+            });
     };
-    useEffect(() => navigation.addListener("blur", save), []);
+    useEffect(() => navigation.addListener("blur", save), [description, title]);
+
     return (
         <View style={styles.div}>
             <TextInput value={title} placeholder="Title" style={{ fontWeight: "bold" }} multiline={true} onChangeText={setTitle} />
