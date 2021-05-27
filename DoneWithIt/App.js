@@ -5,10 +5,12 @@ import HomeScreen from "./screens/Home/HomeScreen";
 import SigninScreen from "./screens/Sign/SignInScreen";
 import SignupScreen from "./screens/Sign/SignUpScreen";
 import NewNote from "./screens/Note/NewNote";
+import { LogBox } from "react-native";
 
 const Stack = createStackNavigator();
 
 function App() {
+    LogBox.ignoreLogs(["Setting a timer"]);
     return (
         <NavigationContainer>
             <Stack.Navigator>

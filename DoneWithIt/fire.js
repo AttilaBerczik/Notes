@@ -11,9 +11,7 @@ const config = {
     appId: "1:855997765914:web:23bddcac555e721c0fb4a3",
 };
 const initFirebase = () => {
-    if (!firebase.apps.length) {
-        firebase.initializeApp(config);
-    }
+    if (!firebase.apps.length) firebase.initializeApp(config);
 };
 initFirebase();
 

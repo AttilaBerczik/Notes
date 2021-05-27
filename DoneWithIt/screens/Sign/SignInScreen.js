@@ -13,11 +13,10 @@ const SigninScreen = ({ navigation }) => {
         const getData = async () => {
             try {
                 const value = await AsyncStorage.getItem("userId");
-                if (value !== null) {
+                if (value !== null)
                     navigation.navigate("Home", {
                         userId: value,
                     });
-                }
             } catch (e) {
                 setError(e);
             }

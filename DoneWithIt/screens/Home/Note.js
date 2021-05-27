@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 
-function Note({ index, navigation, userId, noteData }) {
+const Note = ({ index, navigation, userId, noteData }) => {
     const description = noteData[index].d;
     const title = noteData[index].t;
     return (
@@ -18,7 +18,7 @@ function Note({ index, navigation, userId, noteData }) {
             </View>
         </TouchableWithoutFeedback>
     );
-}
+};
 
 const styles = StyleSheet.create({
     div: {

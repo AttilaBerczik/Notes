@@ -14,12 +14,8 @@ const NewNote = ({ route, navigation }) => {
         copy[index] = { t: title, d: description };
         docRef
             .set({ n: copy })
-            .then(() => {
-                console.log("Document successfully written!");
-            })
-            .catch((error) => {
-                console.log("Error writing document: ", error);
-            });
+            .then(() => console.log("Document successfully written!"))
+            .catch((error) => console.log("Error writing document: ", error));
     };
     useEffect(() => navigation.addListener("blur", save), [description, title]);
 
