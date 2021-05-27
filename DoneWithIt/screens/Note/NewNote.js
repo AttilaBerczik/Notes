@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TextInput, BackHandler } from "react-native";
+import { View, StyleSheet, TextInput } from "react-native";
 import firebase from "../../fire";
-var db = firebase.firestore();
+const db = firebase.firestore();
 
 const NewNote = ({ route, navigation }) => {
     const { index, userId, noteData } = route.params;
-    const docRef = db.doc("users/" + userId);
     const [title, setTitle] = useState(route.params.title);
+    const docRef = db.doc("users/" + userId);
     const [description, setDescription] = useState(route.params.description);
     //when the user leaves the page save the changes
     const save = () => {
         let copy = [...noteData];
-        copy[index] = { t: title, d: description };
-        docRef
-            .set({ n: copy })
-            .then(() => console.log("Document successfully written!"))
-            .catch((error) => console.log("Error writing document: ", error));
+        if (noteData) copy[index] = { t: title, d: description };
+        else copy = [{ d: description, t: title }];
+        docRef.set({ n: copy }).catch((error) => console.log("Error writing document: ", error));
     };
-    useEffect(() => navigation.addListener("blur", save), [description, title]);
+    useEffect(() => navigation.addListener("blur", save), [description, title, docRef]);
 
     return (
         <View style={styles.div}>

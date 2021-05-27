@@ -3,7 +3,7 @@ import { View } from "react-native";
 import Notes from "./Notes";
 import CreateNoteButton from "./CreateNoteButton";
 import firebase from "../../fire";
-var db = firebase.firestore();
+const db = firebase.firestore();
 
 function HomeScreen({ route, navigation }) {
     const [noteData, setNoteData] = useState([]);
@@ -17,7 +17,7 @@ function HomeScreen({ route, navigation }) {
         <View style={{ height: "100%" }}>
             {noteData.n ? (
                 <>
-                    <Notes noteData={noteData.n} navigation={navigation} userId={userId} />
+                    <Notes noteData={noteData.n} navigation={navigation} docRef={docRef} userId={userId} />
                     <CreateNoteButton navigation={navigation} noteData={noteData.n} userId={userId} />
                 </>
             ) : (
