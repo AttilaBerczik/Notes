@@ -1,33 +1,17 @@
 import React, { useState } from "react";
 import { TouchableOpacity, Button, TextInput, Text, View, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import auth from "@react-native-firebase/auth";
+import firebase from "../../fire";
 
-const SigninScreen = ({ navigation }) => {
+const SignupScreen = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const checkSignin = () => {
-        //check if the user is already signed in
-        const getData = async () => {
-            try {
-                const value = await AsyncStorage.getItem("userId");
-                if (value !== null)
-                    navigation.navigate("Home", {
-                        userId: value,
-                    });
-            } catch (e) {
-                setError(e);
-            }
-        };
-        getData();
-    };
-    checkSignin();
-
-    const signIn = () => {
-        auth()
-            .signInWithEmailAndPassword(email, password)
+    const signUp = () => {
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 const storeData = async (value) => {
                     try {
@@ -55,14 +39,13 @@ const SigninScreen = ({ navigation }) => {
             <Text>Password</Text>
             <TextInput value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
             {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
-            <Button title="Sign In" onPress={() => signIn()} />
-            <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-                <Text>Don't have an account? Sign Up</Text>
+            <Button title="Sign Up" onPress={() => signUp()} />
+            <TouchableOpacity onPress={() => navigation.navigate("Signin")}>
+                <Text>Already have an account? Sign In</Text>
             </TouchableOpacity>
         </View>
     );
 };
-
 const styles = StyleSheet.create({
     input: {
         borderWidth: 1,
@@ -77,4 +60,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SigninScreen;
+export default SignupScreen;

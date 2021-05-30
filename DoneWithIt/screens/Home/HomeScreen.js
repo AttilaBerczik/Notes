@@ -9,7 +9,10 @@ function HomeScreen({ route, navigation }) {
     const { userId } = route.params;
     const docRef = firestore().doc("users/" + userId);
     useEffect(() => {
-        const unsubscribe = docRef.onSnapshot((snapshot) => setNoteData(snapshot.data()));
+        const unsubscribe = firestore()
+            .collection("users")
+            .doc(userId)
+            .onSnapshot((snapshot) => setNoteData(snapshot.data()));
         return () => unsubscribe();
     }, [docRef]);
     return (

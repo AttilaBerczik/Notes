@@ -27,7 +27,8 @@
       "package": "com.notes"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "googleServicesFile": "./google-services.json"
     }
   }
 }
